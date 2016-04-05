@@ -56,15 +56,10 @@ export class RecipeList {
 
         this.recipes = this._recipes.filter(x => {
             function hasIngredient(term) {
-                let found = false;
+                let found = x.ingredients.filter(i =>
+                    i.name.toLowerCase().search(term) !== -1);
 
-                x.ingredients.forEach(i => {
-                    if (i.name.toLowerCase().search(term) !== -1) {
-                        found = true;
-                    }
-                });
-
-                return found;
+                return found.length > 0;
             }
 
             return (term === '' ||

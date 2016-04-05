@@ -14,7 +14,7 @@ And of course, it's mobile-first so it looks nice on any screen:
 ![Mobile Example](./docs/mobile.png)
 
 ## Usage
-This project assumes you have [`npm`](https://www.npmjs.com/) and [`gulp`](http://gulpjs.com/) installed globally.
+This project assumes you have [`npm`](https://www.npmjs.com/) and [`gulp`](http://gulpjs.com/) installed globally. It also uses `scss-lint` (`gem install scss-lint`).
 
  * Clone the repo: `git clone https://github.com/kiswa/recipes`
  * Install dependencies: `npm install`

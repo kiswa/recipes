@@ -1,0 +1,13 @@
+@mixin shadow-float {
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .22),
+                0 17px 20px 0 rgba(0, 0, 0, .12);
+}
+
+$btn-text: #fff !default;
+$valid: #8fd689 !default;
+$invalid: #841c26 !default;
+
+$success: #dff2bf;
+$warn: #feefb3;
+$error: #ffbaba;
+$info: #bde5f8;

@@ -1,0 +1,114 @@
+.recipe-list {
+    @include row;
+
+    &:last-of-type {
+        margin-bottom: 1em;
+    }
+
+    select {
+        width: 80%;
+    }
+
+    .recipe-card {
+        @include shadow-low;
+
+        cursor: pointer;
+        margin-bottom: 1em;
+
+        @include media($small) {
+            @include span-columns(6 of 6);
+        }
+
+        @include media($medium) {
+            @include span-columns(6 of 12);
+
+            &:nth-of-type(2) {
+                @include omega;
+            }
+
+            &.center {
+                @include shift(3);
+            }
+        }
+
+        @include media($large) {
+            @include span-columns(6 of 18);
+
+            &:nth-of-type(3) {
+                @include omega;
+            }
+
+            &.center {
+                @include shift(6);
+            }
+        }
+
+        .times {
+            font-size: .8em;
+            font-weight: 700;
+
+            span {
+                float: right;
+            }
+
+            .center {
+                display: block;
+                float: none;
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+
+        h3 {
+            margin-top: 0;
+            padding: .5em 1em 0;
+
+            span {
+                float: right;
+            }
+        }
+
+        img {
+            display: block;
+            max-height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        p {
+            padding: 0 1em;
+
+            &:last-of-type {
+                margin-bottom: .5em;
+            }
+        }
+    }
+}
+
+.recipe-filter {
+    @include row;
+
+    margin-bottom: 1em;
+
+    .filter {
+        padding: 3px 1em;
+
+        @include media($small) {
+            @include span-columns(6 of 6);
+        }
+
+        @include media($medium) {
+            @include span-columns(6 of 12);
+            @include shift(3);
+        }
+
+        @include media($large) {
+            @include span-columns(8 of 18);
+            @include shift(5);
+        }
+
+        select {
+            width: 80%;
+        }
+    }
+}

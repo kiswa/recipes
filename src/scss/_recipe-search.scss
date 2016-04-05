@@ -1,0 +1,17 @@
+.recipe-search {
+    @include omega;
+
+    padding: 1em;
+
+    @include media($small) {
+        @include span-columns(6 of 6);
+    }
+
+    @include media($medium) {
+        @include span-columns(6 of 12);
+    }
+
+    @include media($large) {
+        @include span-columns(6 of 18);
+    }
+}

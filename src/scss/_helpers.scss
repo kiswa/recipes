@@ -1,0 +1,11 @@
+.container {
+    @include outer-container;
+}
+
+a {
+    background-position: left 1.1em;
+}
+
+.center-text {
+    text-align: center;
+}

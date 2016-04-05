@@ -1,0 +1,7 @@
+.sass-cache
+.coverrun
+.coverdata
+node_modules
+dist
+src/api/vendor
+coverage.html

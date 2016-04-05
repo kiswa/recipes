@@ -22,6 +22,8 @@ This project assumes you have [`npm`](https://www.npmjs.com/) and [`gulp`](http:
 
 You'll need to make sure the `dist/api` directory is writable. The `mod_rewrite` module must also be enabled in Apache.
 
+If not running at the root of your server, you will need to update the `base href` in `src/index.html` as it defaults to `/dist/`.
+
 ## Tests
 
 Tests are in the `test` directory.

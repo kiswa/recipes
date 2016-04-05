@@ -3,7 +3,7 @@
         <li><a [routerLink]="['/RecipeList']">Recipe List</a></li>
         <li><a [routerLink]="['/RecipeAdd']">Add New Recipe</a></li>
     </ul>
-    <recipe-search *ngIf="isListPage()"></recipe-search>
+    <recipe-search *ngIf="_location.path() === ''"></recipe-search>
 </nav>
 
 <router-outlet></router-outlet>

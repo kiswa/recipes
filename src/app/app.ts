@@ -22,9 +22,6 @@ import 'rxjs/Rx'; // Import all of RxJs
 ])
 export class AppComponent {
     constructor(private _location: Location) {
-    }
-
-    isListPage(): boolean {
-        return this._location.path() === '';
+        // _location is used in the template to show/hide the search component
     }
 }

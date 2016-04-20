@@ -1,3 +1,4 @@
+global.XMLHttpRequest = function() { return {}; };
 require('../dist/js/vendor.js');
 
 var chai = require('chai'),

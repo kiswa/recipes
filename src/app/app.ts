@@ -1,5 +1,6 @@
 import { Component } from 'angular2/core';
-import { Location, ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router';
+import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router';
+import { Location } from 'angular2/platform/common';
 
 import { RecipeList } from './recipe-list/recipe-list.component';
 import { RecipeForm } from './recipe-form/recipe-form.component';

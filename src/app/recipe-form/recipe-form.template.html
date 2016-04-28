@@ -12,7 +12,7 @@
                 <label for="category">Category</label>
                 <select id="category" required
                     [(ngModel)]="_model.category">
-                    <option *ngFor="#cat of _categories">{{ cat }}</option>
+                    <option *ngFor="let cat of _categories">{{ cat }}</option>
                 </select>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="form-section">
             <h4>Ingredients:</h4>
             <div class="ingredient-row"
-                *ngFor="#ingredient of _model.ingredients; #i = index; #last = last">
+                *ngFor="let ingredient of _model.ingredients; let i = index; let last = last">
                 <div class="ingredient-item">
                     <label attr.for="name{{i}}">Name</label>
                     <input #name id="name{{i}}" type="text" required

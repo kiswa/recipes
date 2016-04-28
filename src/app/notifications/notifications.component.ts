@@ -8,7 +8,7 @@ import { Notification } from './notifications.model';
     template:`
     <div class="notifications">
         <div (click)="hide(note)" class="{{ note.type }}"
-                *ngFor="#note of _notes">
+                *ngFor="let note of _notes">
             {{ note.message }}
         </div>
     </div>

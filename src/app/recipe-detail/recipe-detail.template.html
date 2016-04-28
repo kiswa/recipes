@@ -15,7 +15,7 @@
         </div>
         <div class="ingredients">
             <h3>Ingredients</h3>
-            <p *ngFor="#ingredient of _recipe.ingredients">
+            <p *ngFor="let ingredient of _recipe.ingredients">
                 <span class="name">{{ ingredient.name }}</span>
                 <span class="amount">{{ ingredient.amount }}</span>
                 <span class="measure">{{ ingredient.measure }}</span>

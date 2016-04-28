@@ -3,12 +3,12 @@
         <label for="recipesFilter">Show:</label>
         <select id="recipesFilter" #filter (change)="_filterChanged(filter.value)">
             <option value="">All Recipes</option>
-            <option *ngFor="#cat of _categories">{{ cat }}</option>
+            <option *ngFor="let cat of _categories">{{ cat }}</option>
         </select>
     </div>
 </div>
 <div class="recipe-list">
-    <div class="recipe-card" *ngFor="#recipe of recipes"
+    <div class="recipe-card" *ngFor="let recipe of recipes"
         title="View Recipe: {{ recipe.name }}"
         (click)="viewRecipe(recipe.id)">
         <h3>{{ recipe.name }} <span>{{ recipe.category }}</span></h3>

@@ -24,6 +24,7 @@ var gulp = require('gulp'),
     dist = 'dist/',
     bourbon = 'node_modules/bourbon/app/assets/stylesheets',
     neat = 'node_modules/bourbon-neat/app/assets/stylesheets',
+    normalize = 'node_modules/node-normalize-scss/',
     scss_base = 'node_modules/scss-base/src',
     paths = {
         tsconfig: src + 'app/tsconfig.json',
@@ -81,6 +82,7 @@ gulp.task('styles', function() {
             includePaths: [
                 bourbon,
                 neat,
+                normalize,
                 scss_base
             ]
         }))

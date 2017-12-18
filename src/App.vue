@@ -1,21 +1,38 @@
 <template>
-  <div id="app">
+  <div id="container">
+    <top-navigation></top-navigation>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import TopNavigation from './components/TopNavigation'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    TopNavigation
+  }
 }
 </script>
+<style lang="scss">
+html {
+  box-sizing: border-box;
+}
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  font-family: "Oxygen", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  margin: 0 auto;
+  width: 60%;
 }
 </style>

@@ -14,8 +14,16 @@ export default new Router({
       component: RecipeList
     },
     {
+      path: '/recipe/:id',
+      name: 'view-recipe'
+    },
+    {
       path: '/recipe-add',
       name: 'recipe-add'
+    },
+    {
+      path: '/recipe-edit/:id',
+      name: 'recipe-edit'
     }
   ]
 })

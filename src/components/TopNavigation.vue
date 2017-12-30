@@ -41,6 +41,7 @@ nav {
   input {
     border: 0;
     border-radius: 3px;
+    outline: 0;
     padding: 7px;
   }
 }

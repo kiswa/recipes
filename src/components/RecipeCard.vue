@@ -1,17 +1,91 @@
 <template>
-  <section class="card">
+  <section class="card" @click="viewRecipe(recipe.id)">
     <header>
-      {{ title }}
-      <span>{{ type }}</span>
+      {{ recipe.title }}
+      <span>{{ recipe.type }}</span>
     </header>
-    <img :src="imgSrc">
-    <div class="description">{{ description }}</div>
+    <img :src="recipe.imgSrc" v-if="recipe.imgSrc">
+    <div class="spacer" v-else>No Image</div>
+    <div class="description">{{ recipe.description }}</div>
     <div class="times">
-      <div class="center">Total Recipe Time: {{ recipeTime }}</div>
+      <div class="center">Total Recipe Time: {{ recipe.recipeTime }}</div>
       <div>
-        Prep Time: {{ prepTime }}
-        <span>Cook Time: {{ cookTime }}</span>
+        Prep Time: {{ recipe.prepTime }}
+        <span>Cook Time: {{ recipe.cookTime }}</span>
         </div>
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  props: ['recipe'],
+  methods: {
+    viewRecipe (id) {
+      this.$router.push({ name: 'view-recipe', params: { id } })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.card {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 calc(33.3333% - calc(1rem * .6666));
+  flex-direction: column;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+
+  header,
+  .description,
+  .times {
+    padding: 1rem;
+  }
+
+  header {
+    font-weight: bold;
+
+    span {
+      color: lighten(#333, 25%);
+      float: right;
+      font-size: .9rem;
+      font-weight: normal;
+    }
+  }
+
+  img,
+  .spacer {
+    height: 240px;
+    max-width: 100%;
+  }
+
+  .spacer {
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    padding-top: 32%;
+    text-align: center;
+  }
+
+  .description {
+    flex-grow: 1;
+  }
+
+  .times {
+    font-size: .8rem;
+    font-weight: bold;
+    width: 100%;
+
+    .center {
+      text-align: center;
+    }
+
+    span {
+      float: right;
+    }
+  }
+}
+</style>

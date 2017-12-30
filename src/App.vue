@@ -26,13 +26,17 @@ html {
   padding: 0;
 }
 
+* {
+  font-family: "Oxygen", sans-serif;
+}
+
 #container {
+  color: #333;
   display: flex;
   flex-direction: column;
-  font-family: "Oxygen", sans-serif;
   font-size: 1.1rem;
   line-height: 1.6rem;
   margin: 0 auto;
-  width: 60%;
+  width: 70%;
 }
 </style>

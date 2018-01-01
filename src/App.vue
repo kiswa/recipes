@@ -37,6 +37,18 @@ html {
   font-size: 1.1rem;
   line-height: 1.6rem;
   margin: 0 auto;
-  width: 70%;
+  max-width: 1000px;
+}
+
+@media screen and (max-width: 800px) {
+  #container {
+    max-width: 98%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #container {
+    max-width: 100%;
+  }
 }
 </style>

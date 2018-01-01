@@ -45,4 +45,15 @@ nav {
     padding: 7px;
   }
 }
+
+@media screen and (max-width: 550px) {
+  nav {
+    flex-wrap: wrap;
+
+    input {
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+}
 </style>

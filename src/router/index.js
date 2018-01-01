@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import RecipeList from '../components/RecipeList.vue'
+import RecipeAddEdit from '../components/RecipeAddEdit.vue'
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ export default new Router({
     },
     {
       path: '/recipe-add',
-      name: 'recipe-add'
+      name: 'recipe-add',
+      component: RecipeAddEdit
     },
     {
       path: '/recipe-edit/:id',

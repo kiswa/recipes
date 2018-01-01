@@ -88,4 +88,16 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 800px) {
+  .card {
+    flex: 0 0 calc(50% - calc(1rem * .55));
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .card {
+    flex: 0 0 100%;
+  }
+}
 </style>

@@ -113,12 +113,38 @@ export default {
   }
 }
 
+@media screen and (max-width: 800px) {
+  #filter {
+    select {
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #filter {
+    select {
+      width: 60%;
+    }
+  }
+}
+
 #recipes {
   display: flex;
   flex-wrap: wrap;
 
   .card:nth-child(3n) {
     margin-right: 0;
+  }
+
+  @media screen and (max-width: 800px) {
+    .card:nth-child(3n) {
+      margin-right: 1em;
+    }
+
+    .card:nth-child(2n) {
+      margin-right: 0;
+    }
   }
 }
 </style>

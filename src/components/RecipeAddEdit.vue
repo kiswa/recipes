@@ -47,7 +47,20 @@
       <strong>Ingredients:</strong>
     </div>
 
-    <br><br>{{ recipe }}
+    <div class="row">
+      Instructions:
+      <textarea v-model="recipe.instructions"></textarea>
+    </div>
+
+    <div class="row">
+      Image: <input type="file">
+    </div>
+
+    <div>
+      <button>Save Recipe</button>
+      <button>Save and New Recipe</button>
+      <button>Cancel</button>
+    </div>
   </form>
 </template>
 
@@ -83,6 +96,7 @@ form {
   .row {
     border-bottom: 1px solid #ccc;
     line-height: 3rem;
+    padding-bottom: 3px;
   }
 
   input,
@@ -92,6 +106,8 @@ form {
     border: 1px solid #aaa;
     border-radius: 3px;
     height: 2rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
     outline: 0;
     padding: 2px 7px;
   }
@@ -101,6 +117,16 @@ form {
     height: 100px;
     margin-bottom: 1rem;
     width: 100%;
+  }
+
+  button {
+    background-color: #2b87d8;
+    border: 1px solid #1c5f9a;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 1rem;
+    padding: 10px;
   }
 }
 </style>

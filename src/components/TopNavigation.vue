@@ -4,12 +4,17 @@
     <router-link :to="{ name: 'recipe-add' }">Add New Recipe</router-link>
 
     <div class="spacer"></div>
-    <input type="text" placeholder="Search Recipes...">
+    <input type="text" placeholder="Search Recipes..." v-if="isHome">
   </nav>
 </template>
 
 <script>
 export default {
+  computed: {
+    isHome () {
+      return this.$route.path === '/'
+    }
+  }
 }
 </script>
 
@@ -41,6 +46,7 @@ nav {
   input {
     border: 0;
     border-radius: 3px;
+    font-size: 1rem;
     outline: 0;
     padding: 7px;
   }

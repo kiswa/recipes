@@ -4,9 +4,13 @@
       {{ recipe.title }}
       <span>{{ recipe.type }}</span>
     </header>
-    <img :src="recipe.imgSrc" v-if="recipe.imgSrc">
+
+    <div class="image" v-if="recipe.imgSrc"
+      :style="imageStyle"></div>
     <div class="spacer" v-else>No Image</div>
+
     <div class="description">{{ recipe.description }}</div>
+
     <div class="times">
       <div class="center">Total Recipe Time: {{ recipe.recipeTime }}</div>
       <div>
@@ -20,6 +24,13 @@
 <script>
 export default {
   props: ['recipe'],
+
+  computed: {
+    imageStyle () {
+      return `background-image: url(${this.recipe.imgSrc});`
+    }
+  },
+
   methods: {
     viewRecipe (id) {
       this.$router.push({ name: 'view-recipe', params: { id } })
@@ -57,8 +68,10 @@ export default {
     }
   }
 
-  img,
+  .image,
   .spacer {
+    background-position: center;
+    background-size: cover;
     height: 240px;
     max-width: 100%;
   }

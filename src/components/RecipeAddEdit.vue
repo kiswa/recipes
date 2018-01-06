@@ -53,13 +53,29 @@
     </div>
 
     <div class="row">
-      Image: <input type="file">
+      Image:
+      <input type="file" accept="image/*" id="filer" @change="onFileChange">
+
+      <button v-if="recipe.image" @click.prevent="clearImage()">
+        Clear Image
+      </button>
+
+      <span v-if="recipe.image" class="preview">
+        Preview:
+        <img :src="recipe.image">
+      </span>
     </div>
 
     <div>
-      <button>Save Recipe</button>
-      <button>Save and New Recipe</button>
-      <button>Cancel</button>
+      <button @click.prevent="addRecipe()">
+        Save Recipe
+      </button>
+      <button @click.prevent="addRecipe();resetForm()">
+        Save and New Recipe
+      </button>
+      <button @click.prevent="cancel()">
+        Cancel
+      </button>
     </div>
   </form>
 </template>
@@ -68,15 +84,67 @@
 export default {
   data () {
     return {
-      recipe: {
-        category: 'Appetizer'
-      }
+      recipe: { category: 'Appetizer' }
     }
   },
 
   methods: {
     addRecipe () {
       console.log('add recipe')
+    },
+
+    resetForm () {
+      this.recipe = { category: 'Appetizer' }
+    },
+
+    cancel () {
+      console.log('cancel')
+    },
+
+    clearImage () {
+      let fileInput = document.getElementById('filer')
+
+      fileInput.value = ''
+
+      this.recipe.image = undefined
+      this.$forceUpdate()
+    },
+
+    onFileChange (e) {
+      const files = e.target.files || e.dataTransfer.files
+
+      if (!files.length) return
+
+      let reader = new FileReader()
+      let vm = this
+
+      vm.recipe.image = new Image()
+
+      reader.onload = e => {
+        let img = new Image()
+
+        img.onload = () => {
+          vm.recipe.image = vm.resizeImage(img)
+          vm.$forceUpdate()
+        }
+        img.src = e.target.result
+      }
+      reader.readAsDataURL(files[0])
+    },
+
+    resizeImage (img) {
+      const resizeHeight = 240
+
+      let canvas = document.createElement('canvas')
+      let ctx = canvas.getContext('2d')
+      let aspectRatio = img.width / img.height
+
+      canvas.height = resizeHeight
+      canvas.width = resizeHeight * aspectRatio
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+      return canvas.toDataURL('image/jpeg', 0.7)
     }
   }
 }
@@ -117,6 +185,14 @@ form {
     height: 100px;
     margin-bottom: 1rem;
     width: 100%;
+  }
+
+  .preview {
+    display: block;
+
+    img {
+      vertical-align: top;
+    }
   }
 
   button {

@@ -1,12 +1,12 @@
 {
   "development": {
     "dialect": "sqlite",
-    "storage": "./recipes.sqlite",
+    "storage": "./recipes_dev.sqlite",
     "operatorsAliases": false
   },
   "test": {
     "dialect": "sqlite",
-    "storage": "./recipes.sqlite",
+    "storage": "./recipes_test.sqlite",
     "operatorsAliases": false
   },
   "production": {

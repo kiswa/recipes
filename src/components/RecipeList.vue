@@ -38,7 +38,7 @@ export default {
           id: 2,
           title: 'Food Thing',
           type: 'Appetizer',
-          // imgSrc: 'https://loremflickr.com/320/240?random=2',
+          imgSrc: '',
           description: 'Something interesting about the dish.',
           recipeTime: '3 years',
           prepTime: '1 year',

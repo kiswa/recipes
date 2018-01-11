@@ -2,12 +2,12 @@
   <form @submit.prevent="addRecipe">
     <h2>Add Recipe</h2>
     <div class="row">
-      <label>
+      <label class="short-label">
         Name:
         <input type="text" v-model="recipe.name">
       </label>
 
-      <label>
+      <label class="short-label">
         Category:
         <select v-model="recipe.category">
           <option>Appetizer</option>
@@ -23,16 +23,16 @@
     </div>
 
     <div class="row">
-      <label>
-        Prep Time:
+      <label class="short-label">
+        Prep Time (minutes):
         <input type="number" step="any" min="1"
-          v-model="recipe.prepTime"> minutes
+          v-model="recipe.prepTime">
       </label>
 
-      <label>
-        Cook Time:
+      <label class="short-label">
+        Cook Time (minutes):
         <input type="text" step="any" min="1"
-          v-model="recipe.cookTime"> minutes
+          v-model="recipe.cookTime">
       </label>
     </div>
 
@@ -45,16 +45,35 @@
 
     <div class="row">
       <strong>Ingredients:</strong>
+      <div class="ingredient">
+        <label>
+          Name:
+          <input type="text">
+        </label>
+        <label>
+          Amount:
+          <input type="text">
+        </label>
+        <label>
+          Measure:
+          <input type="text">
+        </label>
+        <a href="javascript:void(0)">+</a>
+      </div>
     </div>
 
     <div class="row">
-      Instructions:
-      <textarea v-model="recipe.instructions"></textarea>
+      <label>
+        Instructions:
+        <textarea v-model="recipe.instructions"></textarea>
+      </label>
     </div>
 
     <div class="row">
-      Image:
-      <input type="file" accept="image/*" id="filer" @change="onFileChange">
+      <label>
+        Image:
+        <input type="file" accept="image/*" id="filer" @change="onFileChange">
+      </label>
 
       <button v-if="recipe.image" @click.prevent="clearImage()">
         Clear Image
@@ -167,6 +186,54 @@ form {
     padding-bottom: 3px;
   }
 
+  .short-label {
+    display: inline-block;
+    width: 49%;
+  }
+
+  .ingredient {
+    label {
+      display: inline-block;
+      width: 32%;
+    }
+
+    input[type="text"] {
+      float: none;
+      margin-left: 1rem;
+      width: 60%;
+    }
+
+    a {
+      background-color:#2b87d8;
+      border: 1px solid #1c5f9a;
+      border-radius: 3px;
+      color: #fff;
+      padding: 0 5px;
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 800px) {
+      label {
+        width: 31.5%;
+      }
+
+      input[type="text"] {
+        margin-right: 0;
+        width: 55%;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      label {
+        width: 100%;
+      }
+
+      input[type="text"] {
+        float: right;
+      }
+    }
+  }
+
   input,
   select,
   textarea {
@@ -176,8 +243,24 @@ form {
     height: 2rem;
     font-size: 1rem;
     line-height: 1.5rem;
+    max-width: 100%;
     outline: 0;
     padding: 2px 7px;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: #777;
+  }
+
+  input:active,
+  input:focus,
+  select:active,
+  select:focus,
+  textarea:active,
+  textarea:focus {
+    border-color: #333;
   }
 
   textarea {
@@ -185,6 +268,15 @@ form {
     height: 100px;
     margin-bottom: 1rem;
     width: 100%;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    float: right;
+    margin-right: 1rem;
+    margin-top: 9px;
+    width: 45%;
   }
 
   .preview {
@@ -200,9 +292,32 @@ form {
     border: 1px solid #1c5f9a;
     border-radius: 3px;
     color: #fff;
+    cursor: pointer;
     font-size: 1rem;
     margin-top: 1rem;
+    outline: 0;
     padding: 10px;
+    transition: all .2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: darken(#2b87d8, 5%);
+  }
+
+  button:active {
+    background-color: darken(#2b87d8, 10%);
+  }
+
+  @media screen and (max-width: 725px) {
+    .short-label {
+      width: 100%;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      margin-right: 0;
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="container">
-    <top-navigation></top-navigation>
-    <router-view></router-view>
+    <top-navigation/>
+    <router-view/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import TopNavigation from './components/TopNavigation'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     TopNavigation
   }

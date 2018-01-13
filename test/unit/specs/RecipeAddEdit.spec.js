@@ -9,8 +9,8 @@ describe('RecipeAddEdit', () => {
     vm = new Vue(RecipeAddEdit).$mount()
   })
 
-  it('should be named "recipe-add-edit"', () => {
-    expect(RecipeAddEdit.name).to.equal('recipe-add-edit')
+  it('should be named "RecipeAddEdit"', () => {
+    expect(RecipeAddEdit.name).to.equal('RecipeAddEdit')
   })
 
   it('should have a default recipe object', () => {

@@ -1,26 +1,30 @@
 <template>
-<div>
-  <div id="filter">
-    Show:
-    <select>
-      <option>All Recipes</option>
-    </select>
+  <div>
+    <div id="filter">
+      Show:
+      <select>
+        <option>All Recipes</option>
+      </select>
+    </div>
+    <div id="recipes">
+      <recipe-card
+        v-for="recipe in recipes"
+        :key="recipe.id"
+        :recipe="recipe"/>
+    </div>
   </div>
-  <div id="recipes">
-    <recipe-card v-for="recipe in recipes" :key="recipe.id"
-      :recipe="recipe"></recipe-card>
-  </div>
-</div>
 </template>
 
 <script>
 import RecipeCard from './RecipeCard.vue'
 
 export default {
-  name: 'recipe-list',
+  name: 'RecipeList',
+
   components: {
     RecipeCard
   },
+
   data () {
     return {
       recipes: [

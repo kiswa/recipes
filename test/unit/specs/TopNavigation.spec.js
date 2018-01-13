@@ -25,6 +25,10 @@ describe('TopNavigation', () => {
     }).$mount()
   })
 
+  it('should be named "TopNavigation"', () => {
+    expect(TopNavigation.name).to.equal('TopNavigation')
+  })
+
   it('should compute the isHome property', () => {
     expect(vm.$children[0].isHome).to.equal(true)
   })

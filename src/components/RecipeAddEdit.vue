@@ -4,12 +4,17 @@
     <div class="row">
       <label class="short-label">
         Name:
-        <input type="text" v-model="recipe.name" required>
+        <input
+          type="text"
+          v-model="recipe.name"
+          required>
       </label>
 
       <label class="short-label">
         Category:
-        <select v-model="recipe.category" required>
+        <select
+          v-model="recipe.category"
+          required>
           <option>Appetizer</option>
           <option>Beverage</option>
           <option>Dessert</option>
@@ -25,13 +30,21 @@
     <div class="row">
       <label class="short-label">
         Prep Time (minutes):
-        <input type="number" step="any" min="1" required
+        <input
+          type="number"
+          step="any"
+          min="1"
+          required
           v-model="recipe.prepTime">
       </label>
 
       <label class="short-label">
         Cook Time (minutes):
-        <input type="text" step="any" min="1" required
+        <input
+          type="text"
+          step="any"
+          min="1"
+          required
           v-model="recipe.cookTime">
       </label>
     </div>
@@ -39,25 +52,36 @@
     <div class="row">
       <label>
         Description:
-        <textarea v-model="recipe.description"></textarea>
+        <textarea v-model="recipe.description"/>
       </label>
     </div>
 
     <div class="row ingredients">
       <strong>Ingredients:</strong>
-      <div class="ingredient" v-for="(ingredient, index) in recipe.ingredients"
+      <div
+        class="ingredient"
+        v-for="(ingredient, index) in recipe.ingredients"
         :key="ingredient.id">
         <label>
           Name:
-          <input type="text" required v-model="ingredient.name">
+          <input
+            type="text"
+            required
+            v-model="ingredient.name">
         </label>
         <label>
           Amount:
-          <input type="text" required v-model="ingredient.amount">
+          <input
+            type="text"
+            required
+            v-model="ingredient.amount">
         </label>
         <label>
           Measure:
-          <input type="text" required v-model="ingredient.measure">
+          <input
+            type="text"
+            required
+            v-model="ingredient.measure">
         </label>
         <a @click.prevent="removeIngredient(index)">-</a>
       </div>
@@ -67,21 +91,31 @@
     <div class="row">
       <label>
         Instructions:
-        <textarea v-model="recipe.instructions" required></textarea>
+        <textarea
+          v-model="recipe.instructions"
+          required/>
       </label>
     </div>
 
     <div class="row">
       <label>
         Image:
-        <input type="file" accept="image/*" ref="filer" @change="onFileChange">
+        <input
+          type="file"
+          accept="image/*"
+          ref="filer"
+          @change="onFileChange">
       </label>
 
-      <button v-if="recipe.image" @click.prevent="clearImage()">
+      <button
+        v-if="recipe.image"
+        @click.prevent="clearImage()">
         Clear Image
       </button>
 
-      <span v-if="recipe.image" class="preview">
+      <span
+        v-if="recipe.image"
+        class="preview">
         Preview:
         <img :src="recipe.image">
       </span>
@@ -103,7 +137,7 @@
 
 <script>
 export default {
-  name: 'recipe-add-edit',
+  name: 'RecipeAddEdit',
 
   data () {
     return {

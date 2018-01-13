@@ -1,13 +1,19 @@
 <template>
-  <section class="card" @click="viewRecipe(recipe.id)">
+  <section
+    class="card"
+    @click="viewRecipe(recipe.id)">
     <header>
       {{ recipe.title }}
       <span>{{ recipe.type }}</span>
     </header>
 
-    <div class="image" v-if="recipe.imgSrc"
-      :style="imageStyle"></div>
-    <div class="spacer" v-else>No Image</div>
+    <div
+      class="image"
+      v-if="recipe.imgSrc"
+      :style="imageStyle"/>
+    <div
+      class="spacer"
+      v-else>No Image</div>
 
     <div class="description">{{ recipe.description }}</div>
 
@@ -16,16 +22,30 @@
       <div>
         Prep Time: {{ recipe.prepTime }}
         <span>Cook Time: {{ recipe.cookTime }}</span>
-        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'recipe-card',
+  name: 'RecipeCard',
 
-  props: ['recipe'],
+  props: {
+    recipe: {
+      type: Object,
+      default: () => {
+        return {
+          title: '',
+          type: '',
+          imgSrc: '',
+          description: '',
+          prepTime: 0,
+          cookTime: 0
+        }
+      }
+    }
+  },
 
   computed: {
     imageStyle () {

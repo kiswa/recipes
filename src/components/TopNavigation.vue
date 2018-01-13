@@ -3,13 +3,18 @@
     <router-link :to="{ name: 'recipe-list' }">Recipe List</router-link>
     <router-link :to="{ name: 'recipe-add' }">Add New Recipe</router-link>
 
-    <div class="spacer"></div>
-    <input type="text" placeholder="Search Recipes..." v-if="isHome">
+    <div class="spacer"/>
+    <input
+      type="text"
+      placeholder="Search Recipes..."
+      v-if="isHome">
   </nav>
 </template>
 
 <script>
 export default {
+  name: 'TopNavigation',
+
   computed: {
     isHome () {
       return this.$route.path === '/'

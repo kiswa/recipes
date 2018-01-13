@@ -1,8 +1,8 @@
 import RecipeList from '@/components/RecipeList'
 
 describe('RecipeList', () => {
-  it('should be named "recipe-list"', () => {
-    expect(RecipeList.name).to.equal('recipe-list')
+  it('should be named "RecipeList"', () => {
+    expect(RecipeList.name).to.equal('RecipeList')
   })
 
   it('should have a recipes array', () => {

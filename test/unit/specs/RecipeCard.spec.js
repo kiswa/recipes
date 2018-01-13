@@ -18,8 +18,15 @@ describe('RecipeCard', () => {
     vm = new Constructor({ propsData: { recipe: recipeMock } }).$mount()
   })
 
-  it('should be named "recipe-card"', () => {
-    expect(RecipeCard.name).to.equal('recipe-card')
+  it('should be named "RecipeCard"', () => {
+    expect(RecipeCard.name).to.equal('RecipeCard')
+  })
+
+  it('should have a default recipe object if not passed in', () => {
+    vm = new Vue(RecipeCard).$mount()
+
+    expect(vm.recipe).to.be.an('object')
+    expect(vm.recipe.title).to.equal('')
   })
 
   it('should load a recipe in props', () => {

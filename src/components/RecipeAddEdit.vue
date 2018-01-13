@@ -1,15 +1,15 @@
 <template>
   <form @submit.prevent="addRecipe">
-    <h2>Add Recipe</h2>
+    <h2>Add Recipe <span class="required">= required field</span></h2>
     <div class="row">
       <label class="short-label">
         Name:
-        <input type="text" v-model="recipe.name">
+        <input type="text" v-model="recipe.name" required>
       </label>
 
       <label class="short-label">
         Category:
-        <select v-model="recipe.category">
+        <select v-model="recipe.category" required>
           <option>Appetizer</option>
           <option>Beverage</option>
           <option>Dessert</option>
@@ -25,13 +25,13 @@
     <div class="row">
       <label class="short-label">
         Prep Time (minutes):
-        <input type="number" step="any" min="1"
+        <input type="number" step="any" min="1" required
           v-model="recipe.prepTime">
       </label>
 
       <label class="short-label">
         Cook Time (minutes):
-        <input type="text" step="any" min="1"
+        <input type="text" step="any" min="1" required
           v-model="recipe.cookTime">
       </label>
     </div>
@@ -43,36 +43,38 @@
       </label>
     </div>
 
-    <div class="row">
+    <div class="row ingredients">
       <strong>Ingredients:</strong>
-      <div class="ingredient">
+      <div class="ingredient" v-for="(ingredient, index) in recipe.ingredients"
+        :key="ingredient.id">
         <label>
           Name:
-          <input type="text">
+          <input type="text" required v-model="ingredient.name">
         </label>
         <label>
           Amount:
-          <input type="text">
+          <input type="text" required v-model="ingredient.amount">
         </label>
         <label>
           Measure:
-          <input type="text">
+          <input type="text" required v-model="ingredient.measure">
         </label>
-        <a href="javascript:void(0)">+</a>
+        <a @click.prevent="removeIngredient(index)">-</a>
       </div>
+      <button @click.prevent="addIngredient">Add</button>
     </div>
 
     <div class="row">
       <label>
         Instructions:
-        <textarea v-model="recipe.instructions"></textarea>
+        <textarea v-model="recipe.instructions" required></textarea>
       </label>
     </div>
 
     <div class="row">
       <label>
         Image:
-        <input type="file" accept="image/*" id="filer" @change="onFileChange">
+        <input type="file" accept="image/*" ref="filer" @change="onFileChange">
       </label>
 
       <button v-if="recipe.image" @click.prevent="clearImage()">
@@ -101,9 +103,14 @@
 
 <script>
 export default {
+  name: 'recipe-add-edit',
+
   data () {
     return {
-      recipe: { category: 'Appetizer' }
+      recipe: {
+        category: 'Appetizer',
+        ingredients: [{}]
+      }
     }
   },
 
@@ -113,15 +120,26 @@ export default {
     },
 
     resetForm () {
-      this.recipe = { category: 'Appetizer' }
+      this.recipe = {
+        category: 'Appetizer',
+        ingredients: [{}]
+      }
     },
 
     cancel () {
       console.log('cancel')
     },
 
+    addIngredient () {
+      this.recipe.ingredients.push({})
+    },
+
+    removeIngredient (index) {
+      this.recipe.ingredients.splice(index, 1)
+    },
+
     clearImage () {
-      let fileInput = document.getElementById('filer')
+      let fileInput = this.$refs.filer
 
       fileInput.value = ''
 
@@ -178,17 +196,45 @@ form {
 
   h2 {
     margin-bottom: 1rem;
+
+    span {
+      border-left: 2px solid #841c26;
+      color: #999;
+      font-size: .7rem;
+      font-weight: normal;
+      margin-left: 2rem;
+      padding-left: .4rem;
+    }
+  }
+
+  [required] {
+    border-left: 3px solid #841c26 !important;
   }
 
   .row {
     border-bottom: 1px solid #ccc;
     line-height: 3rem;
     padding-bottom: 3px;
+
+    .ingredient:first-of-type {
+      a {
+        display: none;
+      }
+    }
   }
 
   .short-label {
     display: inline-block;
     width: 49%;
+  }
+
+  .ingredients {
+    overflow: hidden;
+    padding-bottom: 1rem;
+
+    button {
+      float: right;
+    }
   }
 
   .ingredient {
@@ -208,6 +254,7 @@ form {
       border: 1px solid #1c5f9a;
       border-radius: 3px;
       color: #fff;
+      cursor: pointer;
       padding: 0 5px;
       text-decoration: none;
     }

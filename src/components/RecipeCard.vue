@@ -12,7 +12,7 @@
     <div class="description">{{ recipe.description }}</div>
 
     <div class="times">
-      <div class="center">Total Recipe Time: {{ recipe.recipeTime }}</div>
+      <div class="center">Total Recipe Time: {{ recipeTime }}</div>
       <div>
         Prep Time: {{ recipe.prepTime }}
         <span>Cook Time: {{ recipe.cookTime }}</span>
@@ -23,11 +23,17 @@
 
 <script>
 export default {
+  name: 'recipe-card',
+
   props: ['recipe'],
 
   computed: {
     imageStyle () {
       return `background-image: url(${this.recipe.imgSrc});`
+    },
+
+    recipeTime () {
+      return this.recipe.prepTime + this.recipe.cookTime
     }
   },
 

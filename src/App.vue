@@ -15,7 +15,12 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
+@import '../node_modules/noty/lib/noty.css';
+@import '../node_modules/noty/lib/themes/mint.css';
+
+
 html {
   box-sizing: border-box;
 }

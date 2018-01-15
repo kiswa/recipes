@@ -2,12 +2,29 @@
 
 module.exports = (sequelize, DataTypes) => {
   let Recipe = sequelize.define('Recipe', {
-    name: DataTypes.STRING,
-    category: DataTypes.STRING,
-    prepTime: DataTypes.FLOAT,
-    cookTime: DataTypes.FLOAT,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    prepTime: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: { isNumeric: true  }
+    },
+    cookTime: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: { isNumeric: true }
+    },
     description: DataTypes.TEXT,
-    instructions: DataTypes.TEXT,
+    instructions: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
     image: DataTypes.TEXT
   })
 

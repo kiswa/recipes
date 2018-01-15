@@ -65,6 +65,7 @@
         <label>
           Name:
           <input
+            class="name"
             type="text"
             required
             v-model="ingredient.name">
@@ -85,7 +86,7 @@
         </label>
         <a @click.prevent="removeIngredient(index)">-</a>
       </div>
-      <button @click.prevent="addIngredient">Add</button>
+      <button @click.prevent="addIngredient">Add Ingredient</button>
     </div>
 
     <div class="row">
@@ -122,20 +123,23 @@
     </div>
 
     <div>
-      <button @click.prevent="addRecipe()">
+      <button @click.prevent="addRecipe(true)">
         Save Recipe
       </button>
-      <button @click.prevent="addRecipe();resetForm()">
+      <button @click.prevent="addRecipe(false)">
         Save and New Recipe
       </button>
       <button @click.prevent="cancel()">
         Cancel
       </button>
     </div>
+    <pre>{{ recipe }}</pre>
   </form>
 </template>
 
 <script>
+import Noty from 'noty'
+
 export default {
   name: 'RecipeAddEdit',
 
@@ -149,8 +153,36 @@ export default {
   },
 
   methods: {
-    addRecipe () {
-      console.log('add recipe')
+    addRecipe (isComplete) {
+      this.$http.post('', this.recipe)
+        .then(response => {
+          if (response.data.message !== 'success') {
+            isComplete = false
+
+            response.data.errors.forEach(error => {
+              error.message = error.message.replace('.', ' ')
+              new Noty({
+                type: 'error',
+                layout: 'topCenter',
+                text: error.message + '.',
+                timeout: 3000
+              }).show()
+            })
+          }
+
+          if (isComplete) {
+            this.$router.push({ path: '/' })
+          }
+        })
+        .catch(error => {
+          console.log('error', error)
+          new Noty({
+            type: 'error',
+            layout: 'topCenter',
+            text: 'There was an error saving the recipe. Please try again.',
+            timeout: 3000
+          }).show()
+        })
     },
 
     resetForm () {
@@ -161,11 +193,17 @@ export default {
     },
 
     cancel () {
-      console.log('cancel')
+      this.$router.go(-1)
     },
 
     addIngredient () {
       this.recipe.ingredients.push({})
+
+      setTimeout(() => {
+        let names = document.getElementsByClassName('name')
+
+        names[names.length - 1].focus()
+      }, 10)
     },
 
     removeIngredient (index) {

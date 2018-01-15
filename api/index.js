@@ -1,10 +1,21 @@
 let express = require('express')
+let bodyParser = require('body-parser')
 
 let models = require('./models')
 let routes = require('./routes/index')
 let recipes = require('./routes/recipes')
 
 let app = express()
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers",
+             "Origin, X-Requested-With, Content-Type, Accept")
+
+  next()
+})
+
+app.use(bodyParser.json())
 
 app.use('/', routes)
 app.use('/recipes', recipes)

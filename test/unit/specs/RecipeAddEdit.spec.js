@@ -22,9 +22,53 @@ describe('RecipeAddEdit', () => {
   })
 
   it('should have an addRecipe method', () => {
-    // TODO: Test function once it does something
     expect(RecipeAddEdit.methods.addRecipe).to.be.a('function')
-    vm.addRecipe()
+
+    let routerUsed = false
+    let httpUsed = false
+    let called = false
+
+    Object.defineProperty(vm, '$http', {
+      get: () => {
+        return {
+          post: () => {
+            httpUsed = true
+
+            return {
+              then: func => {
+                if (called) {
+                  func(JSON.stringify({ message: 'success' }))
+                } else {
+                  func(JSON.stringify({ message: 'error' }))
+                }
+
+                called = true
+
+                return {
+                  catch: func => func()
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    Object.defineProperty(vm, '$router', {
+      get: () => {
+        return {
+          push: () => {
+            routerUsed = true
+          }
+        }
+      }
+    })
+
+    vm.addRecipe(false)
+    vm.addRecipe(true)
+
+    expect(routerUsed).to.equal(true)
+    expect(httpUsed).to.equal(true)
   })
 
   it('should have a resetForm method', () => {
@@ -37,17 +81,32 @@ describe('RecipeAddEdit', () => {
   })
 
   it('should have a cancel method', () => {
-    // TODO: Test function once it does something
     expect(RecipeAddEdit.methods.cancel).to.be.a('function')
+
+    let routerUsed = false
+
+    Object.defineProperty(vm, '$router', {
+      get: () => {
+        return {
+          go: function () { routerUsed = true }
+        }
+      }
+    })
+
     vm.cancel()
+    expect(routerUsed).to.equal(true)
   })
 
-  it('should have an addIngredient method', () => {
+  it('should have an addIngredient method', done => {
     expect(RecipeAddEdit.methods.addIngredient).to.be.a('function')
-
     expect(vm.$data.recipe.ingredients.length).to.equal(1)
+
     vm.addIngredient()
-    expect(vm.$data.recipe.ingredients.length).to.equal(2)
+
+    Vue.nextTick(() => {
+      expect(vm.$data.recipe.ingredients.length).to.equal(2)
+      done()
+    })
   })
 
   it('should have a removeIngredient method', () => {

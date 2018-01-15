@@ -10,8 +10,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "sequelize": "^4.31.1",
+    "sequelize": "^4.31.2",
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {

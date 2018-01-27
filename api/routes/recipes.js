@@ -3,16 +3,15 @@ let express = require('express')
 let router = express.Router()
 
 router.get('/', (req, res) => {
-  models.Recipe.findAll({ include: [models.Recipe.Ingredient] }).then(
-    recipes => {
+  models.recipe.findAll({ include: [models.ingredient] })
+    .then(recipes => {
       res.json(recipes)
-    }
-  )
+    })
 })
 
 router.post('/', (req, res) => {
-  models.Recipe.create(req.body, {
-    include: [{ model: models.Ingredient }]
+  models.recipe.create(req.body, {
+    include: [models.recipe.Ingredients]
   })
     .then(() => {
       res.json({ message: 'success' })
@@ -23,7 +22,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  models.Recipe.findById(req.params.id).then(recipe => {
+  models.recipe.findById(req.params.id).then(recipe => {
     res.json(recipe)
   })
 })

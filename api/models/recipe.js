@@ -1,19 +1,21 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  let Recipe = sequelize.define('Recipe', {
+  const Recipe = sequelize.define('recipe', {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     },
     category: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     },
     prepTime: {
       type: DataTypes.FLOAT,
       allowNull: false,
-      validate: { isNumeric: true  }
+      validate: { isNumeric: true }
     },
     cookTime: {
       type: DataTypes.FLOAT,
@@ -23,13 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     instructions: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     },
     image: DataTypes.TEXT
   })
 
   Recipe.associate = (models) => {
-    Recipe.hasMany(models.Ingredient)
+    Recipe.Ingredients = Recipe.hasMany(models.ingredient)
   }
 
   return Recipe

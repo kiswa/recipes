@@ -1,23 +1,26 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  let Ingredient = sequelize.define('Ingredient', {
+  const Ingredient = sequelize.define('ingredient', {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     },
     amount: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     },
     measure: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     }
   })
 
   Ingredient.associate = (models) => {
-    Ingredient.belongsTo(models.Recipe, { onDelete: 'CASCADE' })
+    Ingredient.belongsTo(models.recipe, { onDelete: 'CASCADE' })
   }
 
   return Ingredient

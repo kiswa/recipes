@@ -1,6 +1,7 @@
 <template>
   <form @submit.prevent="addRecipe">
     <h2>Add Recipe <span class="required">= required field</span></h2>
+
     <div class="row">
       <label class="short-label">
         Name:
@@ -133,7 +134,7 @@
         Cancel
       </button>
     </div>
-    <pre>{{ recipe }}</pre>
+
   </form>
 </template>
 

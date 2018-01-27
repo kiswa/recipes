@@ -1,5 +1,6 @@
 let express = require('express')
 let bodyParser = require('body-parser')
+let compression = require('compression')
 
 let models = require('./models')
 let routes = require('./routes/index')
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
 })
 
 app.use(bodyParser.json())
+app.use(compression())
 
 app.use('/', routes)
 app.use('/recipes', recipes)

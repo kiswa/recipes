@@ -8,7 +8,7 @@
     "dev": "./node_modules/.bin/nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Matthew Ross <kiswa.com@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",

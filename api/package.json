@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon .",
+    "start": "./node_modules/.bin/forever .",
+    "dev": "./node_modules/.bin/nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
     "express": "^4.16.2",
-    "sequelize": "^4.31.2",
+    "forever": "^0.15.3",
+    "sequelize": "^4.32.2",
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {

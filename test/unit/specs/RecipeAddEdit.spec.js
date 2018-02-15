@@ -1,48 +1,59 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+import router from '@/router'
 import RecipeAddEdit from '@/components/RecipeAddEdit'
 
 describe('RecipeAddEdit', () => {
   const singlePixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='
-  let vm
+  let vm, routerUsed, httpUsed, called, throwError
 
   beforeEach(() => {
-    vm = new Vue(RecipeAddEdit).$mount()
-  })
+    Vue.use(VueRouter)
+    const Constructor = Vue.extend(RecipeAddEdit)
+    vm = new Constructor({
+      router,
+      params: { id: 0 }
+    }).$mount()
 
-  it('should be named "RecipeAddEdit"', () => {
-    expect(RecipeAddEdit.name).to.equal('RecipeAddEdit')
-  })
-
-  it('should have a default recipe object', () => {
-    const data = RecipeAddEdit.data()
-
-    expect(data.recipe).to.be.a('object')
-    expect(data.recipe.category).to.equal('Appetizer')
-    expect(data.recipe.ingredients.length).to.equal(1)
-  })
-
-  it('should have an addRecipe method', () => {
-    expect(RecipeAddEdit.methods.addRecipe).to.be.a('function')
-
-    let routerUsed = false
-    let httpUsed = false
-    let called = false
+    Object.defineProperty(vm, '$route', {
+      get() {
+        return { params: { id: 0 } }
+      }
+    })
 
     Object.defineProperty(vm, '$http', {
       get: () => {
         return {
-          post: () => {
+          post: async () => {
             httpUsed = true
 
             return {
               then: func => {
                 if (called) {
-                  func(JSON.stringify({ message: 'success' }))
+                  func({ data: { message: 'success' } })
                 } else {
-                  func(JSON.stringify({ message: 'error' }))
+                  func({
+                    data: {
+                      message: 'error', errors: [{ message: 'Test' }]
+                    }
+                  })
                 }
 
                 called = true
+
+                return {
+                  catch: func => func()
+                }
+              }
+            }
+          },
+
+          put: async () => {
+            httpUsed = true
+            return {
+              then: func => {
+                func({})
 
                 return {
                   catch: func => func()
@@ -59,15 +70,124 @@ describe('RecipeAddEdit', () => {
         return {
           push: () => {
             routerUsed = true
+          },
+
+          go: () => {
+            routerUsed = true
+          }
+        }
+      }
+    })
+  })
+
+  it('should be named "RecipeAddEdit"', () => {
+    expect(RecipeAddEdit.name).to.equal('RecipeAddEdit')
+  })
+
+  it('should have a default recipe object', () => {
+    expect(vm.recipe).to.be.a('object')
+    expect(vm.recipe.category).to.equal('Appetizer')
+    expect(vm.recipe.ingredients.length).to.equal(1)
+  })
+
+  it('should load a recipe if in edit mode', () => {
+    httpUsed = false
+    called = 0
+
+    const Constructor = Vue.extend(RecipeAddEdit)
+    let lvm = new Constructor({
+      router,
+      computed: {
+        isEdit() { return true }
+      }
+    })
+
+    Object.defineProperty(lvm, '$http', {
+      get: () => {
+        return {
+          get: async () => {
+            httpUsed = true
+
+            return {
+              then: func => {
+                if (called) {
+                  func({ data: null })
+                } else {
+                  func({ data: { test: true } })
+                }
+                called = true
+
+                return {
+                  catch: func => func()
+                }
+              }
+            }
           }
         }
       }
     })
 
-    vm.addRecipe(false)
-    vm.addRecipe(true)
+    lvm.$mount()
+    lvm.$mount()
+
+    expect(httpUsed).to.equal(true)
+  })
+
+  it('should have a saveRecipe method', async () => {
+    expect(RecipeAddEdit.methods.saveRecipe).to.be.a('function')
+
+    routerUsed = false
+    httpUsed = false
+    called = false
+
+    await vm.saveRecipe(false)
+    await vm.saveRecipe(true)
 
     expect(routerUsed).to.equal(true)
+    expect(httpUsed).to.equal(true)
+
+    httpUsed = false
+
+    await vm.saveRecipe(false)
+    expect(httpUsed).to.equal(true)
+  })
+
+  it('should update in saveRecipe method', async () => {
+    httpUsed = false
+
+    const Constructor = Vue.extend(RecipeAddEdit)
+    let lvm = new Constructor({
+      router,
+      computed: {
+        isEdit() { return true }
+      }
+    }).$mount()
+
+    Object.defineProperty(lvm, '$http', {
+      get: () => {
+        return {
+          put: async () => {
+            httpUsed = true
+
+            return {
+              then: func => {
+                func({ data: { message: 'success' } })
+                return {
+                  catch: func => func()
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    Object.defineProperty(lvm, '$router', {
+      get: () => { push: () => {} }
+    })
+
+    await lvm.saveRecipe(true)
+
     expect(httpUsed).to.equal(true)
   })
 
@@ -83,15 +203,7 @@ describe('RecipeAddEdit', () => {
   it('should have a cancel method', () => {
     expect(RecipeAddEdit.methods.cancel).to.be.a('function')
 
-    let routerUsed = false
-
-    Object.defineProperty(vm, '$router', {
-      get: () => {
-        return {
-          go: function () { routerUsed = true }
-        }
-      }
-    })
+    routerUsed = false
 
     vm.cancel()
     expect(routerUsed).to.equal(true)
@@ -120,10 +232,16 @@ describe('RecipeAddEdit', () => {
   it('should have a clearImage method', () => {
     expect(RecipeAddEdit.methods.clearImage).to.be.a('function')
 
-    vm.$data.recipe.image = 'somedata'
+    Object.defineProperty(vm, '$refs', {
+      get() {
+        return { filer: {} }
+      }
+    })
+
+    vm.recipe.image = 'somedata'
     vm.clearImage()
 
-    expect(vm.$data.recipe.image).to.equal(undefined)
+    expect(vm.recipe.image).to.equal('')
   })
 
   it('should have an onFileChange method', done => {
@@ -174,5 +292,23 @@ describe('RecipeAddEdit', () => {
       finalImg.src = vm.resizeImage(img)
     }
     img.src = singlePixel
+  })
+
+  it('should have a checkErrors method', () => {
+    const response = {
+      data: {
+        message: 'test',
+        errors: [{ message: 'ooPsie' }]
+      }
+    }
+    let result = vm.checkErrors(response)
+
+    expect(result).to.equal(false)
+  })
+
+  it('should have a transformErrorMessage method', () => {
+    let result = vm.transformErrorMessage('err.oops')
+
+    expect(result).to.equal('Err oops.')
   })
 })

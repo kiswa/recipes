@@ -6,8 +6,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios.create({
-  baseURL: 'http://localhost:3000/recipes'
+const api = axios.create({ baseURL: 'http://localhost:3000/' })
+
+Object.defineProperty(Vue.prototype, '$http', {
+  get() {
+    return api
+  }
 })
 
 /* eslint-disable no-new */

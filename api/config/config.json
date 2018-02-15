@@ -4,9 +4,9 @@
     "storage": "./recipes_dev.sqlite",
     "operatorsAliases": false
   },
-  "test": {
+  "testing": {
     "dialect": "sqlite",
-    "storage": "./recipes_test.sqlite",
+    "storage": "./api/recipes_test.sqlite",
     "operatorsAliases": false
   },
   "production": {

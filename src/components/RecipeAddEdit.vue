@@ -1,11 +1,19 @@
 <template>
-  <form @submit.prevent="addRecipe">
-    <h2>Add Recipe <span class="required">= required field</span></h2>
+  <form
+    @submit.prevent="addRecipe"
+    v-if="recipe">
+    <h2 v-if="!isEdit">
+      Add Recipe <span class="required">= required field</span>
+    </h2>
+    <h2 v-else>
+      Edit Recipe <span class="required">= required field</span>
+    </h2>
 
     <div class="row">
       <label class="short-label">
         Name:
         <input
+          id="recipe-name"
           type="text"
           v-model="recipe.name"
           required>
@@ -14,16 +22,12 @@
       <label class="short-label">
         Category:
         <select
+          id="recipe-category"
           v-model="recipe.category"
           required>
-          <option>Appetizer</option>
-          <option>Beverage</option>
-          <option>Dessert</option>
-          <option>Dip</option>
-          <option>Main Dish</option>
-          <option>Sauce</option>
-          <option>Side Dish</option>
-          <option>Soup</option>
+          <option
+            v-for="type in recipeTypes"
+            :key="type">{{ type }}</option>
         </select>
       </label>
     </div>
@@ -32,6 +36,7 @@
       <label class="short-label">
         Prep Time (minutes):
         <input
+          id="recipe-prep"
           type="number"
           step="any"
           min="1"
@@ -42,6 +47,7 @@
       <label class="short-label">
         Cook Time (minutes):
         <input
+          id="recipe-cook"
           type="text"
           step="any"
           min="1"
@@ -53,7 +59,9 @@
     <div class="row">
       <label>
         Description:
-        <textarea v-model="recipe.description"/>
+        <textarea
+          id="recipe-description"
+          v-model="recipe.description"/>
       </label>
     </div>
 
@@ -74,6 +82,7 @@
         <label>
           Amount:
           <input
+            class="amount"
             type="text"
             required
             v-model="ingredient.amount">
@@ -81,6 +90,7 @@
         <label>
           Measure:
           <input
+            class="measure"
             type="text"
             required
             v-model="ingredient.measure">
@@ -94,6 +104,7 @@
       <label>
         Instructions:
         <textarea
+          id="recipe-instructions"
           v-model="recipe.instructions"
           required/>
       </label>
@@ -124,13 +135,19 @@
     </div>
 
     <div>
-      <button @click.prevent="addRecipe(true)">
+      <button
+        id="save"
+        @click.prevent="saveRecipe(true)">
         Save Recipe
       </button>
-      <button @click.prevent="addRecipe(false)">
+      <button
+        id="save-new"
+        @click.prevent="saveRecipe(false)">
         Save and New Recipe
       </button>
-      <button @click.prevent="cancel()">
+      <button
+        id="cancel"
+        @click.prevent="cancel()">
         Cancel
       </button>
     </div>
@@ -139,7 +156,7 @@
 </template>
 
 <script>
-import Noty from 'noty'
+import { RECIPE_TYPES, showNoty } from '../utility'
 
 export default {
   name: 'RecipeAddEdit',
@@ -149,41 +166,64 @@ export default {
       recipe: {
         category: 'Appetizer',
         ingredients: [{}]
-      }
+      },
+      recipeTypes: RECIPE_TYPES
+    }
+  },
+
+  computed: {
+    isEdit () { return (this.$route.params && this.$route.params.id) }
+  },
+
+  async mounted () {
+    if (this.isEdit) {
+      await this.getRecipe()
     }
   },
 
   methods: {
-    addRecipe (isComplete) {
-      this.$http.post('', this.recipe)
-        .then(response => {
-          if (response.data.message !== 'success') {
-            isComplete = false
+    async getRecipe () {
+      try {
+        const response = await this.$http.get('recipes/' + this.$route.params.id)
 
-            response.data.errors.forEach(error => {
-              error.message = error.message.replace('.', ' ')
-              new Noty({
-                type: 'error',
-                layout: 'topCenter',
-                text: error.message + '.',
-                timeout: 3000
-              }).show()
-            })
-          }
+        if (response.data === null) {
+          this.$router.push({ name: 'recipe-list' })
+          showNoty('Requested recipe not found.')
+          return
+        }
 
-          if (isComplete) {
-            this.$router.push({ path: '/' })
-          }
-        })
-        .catch(error => {
-          console.log('error', error)
-          new Noty({
-            type: 'error',
-            layout: 'topCenter',
-            text: 'There was an error saving the recipe. Please try again.',
-            timeout: 3000
-          }).show()
-        })
+        this.recipe = response.data
+      } catch (error) {
+        /* istanbul ignore next */
+        showNoty(error)
+      }
+    },
+
+    async saveRecipe (isComplete) {
+      try {
+        const response = this.isEdit
+          ? await this.$http.put('recipes', this.recipe)
+          : await this.$http.post('recipes', this.recipe)
+
+        if (this.checkErrors(response) && isComplete) {
+          this.$router.push({
+            path: this.isEdit
+              /* istanbul ignore next */
+              ? '/recipe/' + this.recipe.id
+              : '/'
+          })
+          showNoty(`Recipe ${response.data.name} ` + (this.isEdit
+                  /* istanbul ignore next */
+                   ? 'edited'
+                   : 'added'),
+                   'success')
+          return
+        }
+      } catch(e) {
+        showNoty('There was an error saving the recipe. Please try again.')
+      }
+
+      this.resetForm()
     },
 
     resetForm () {
@@ -216,7 +256,7 @@ export default {
 
       fileInput.value = ''
 
-      this.recipe.image = undefined
+      this.recipe.image = ''
       this.$forceUpdate()
     },
 
@@ -234,7 +274,9 @@ export default {
         let img = new Image()
 
         img.onload = () => {
+          /* istanbul ignore next */
           vm.recipe.image = vm.resizeImage(img)
+          /* istanbul ignore next */
           vm.$forceUpdate()
         }
         img.src = e.target.result
@@ -255,6 +297,26 @@ export default {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
       return canvas.toDataURL('image/jpeg', 0.7)
+    },
+
+    checkErrors (response) {
+      if (response.data.message === 'success') {
+        return true
+      }
+
+      response.data.errors
+        .forEach(error => showNoty(this.transformErrorMessage(error.message)))
+
+      return false
+    },
+
+    transformErrorMessage (message) {
+      message = message.replace('.', ' ')
+      message = message
+        .replace(/([A-Z])/, (match, p1) => ' ' + p1.toLowerCase())
+      message = message.charAt(0).toUpperCase() + message.slice(1) + '.'
+
+      return message
     }
   }
 }

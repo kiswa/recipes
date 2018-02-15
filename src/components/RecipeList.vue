@@ -1,14 +1,34 @@
 <template>
   <div>
-    <div id="filter">
+    <div
+      id="filter"
+      v-if="!noRecipes">
       Show:
-      <select>
+      <select v-model="filterCategory">
         <option>All Recipes</option>
+        <option
+          v-for="type in recipeTypes"
+          :key="type">{{ type }}</option>
       </select>
     </div>
+
+    <div
+      class="loading"
+      v-if="isLoading">
+      Loading Recipes...
+    </div>
+
+    <div
+      class="no-recipes"
+      v-if="noRecipes"
+      @click="addRecipe()">
+      <h3>No recipes found.</h3>
+      Click this card to add one.
+    </div>
+
     <div id="recipes">
       <recipe-card
-        v-for="recipe in recipes"
+        v-for="recipe in filteredRecipes"
         :key="recipe.id"
         :recipe="recipe"/>
     </div>
@@ -16,6 +36,7 @@
 </template>
 
 <script>
+import { showNoty, RECIPE_TYPES } from '../utility'
 import RecipeCard from './RecipeCard.vue'
 
 export default {
@@ -27,78 +48,50 @@ export default {
 
   data () {
     return {
-      recipes: [
-        {
-          id: 1,
-          title: 'Food Thing',
-          type: 'Main Dish',
-          imgSrc: 'https://loremflickr.com/320/240?random=1',
-          description: 'Something interesting about the dish.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 2,
-          title: 'Food Thing',
-          type: 'Appetizer',
-          imgSrc: '',
-          description: 'Something interesting about the dish.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 3,
-          title: 'Food Thing',
-          type: 'Soup',
-          imgSrc: 'https://loremflickr.com/320/240?random=3',
-          description: 'Something interesting about the dish that takes up more space than the others.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 4,
-          title: 'Food Thing',
-          type: 'Main Dish',
-          imgSrc: 'https://loremflickr.com/320/240?random=4',
-          description: 'Something interesting about the dish that takes up more space than the others.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 5,
-          title: 'Food Thing',
-          type: 'Main Dish',
-          imgSrc: 'https://loremflickr.com/320/240?random=5',
-          description: 'Something interesting about the dish.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 6,
-          title: 'Food Thing',
-          type: 'Main Dish',
-          imgSrc: 'https://loremflickr.com/320/240?random=6',
-          description: 'Something interesting about the dish.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        },
-        {
-          id: 7,
-          title: 'Food Thing',
-          type: 'Main Dish',
-          imgSrc: 'https://loremflickr.com/320/240?random=7',
-          description: 'Something interesting about the dish that takes up more space than the others.',
-          recipeTime: '3 years',
-          prepTime: '1 year',
-          cookTime: '2 years'
-        }
-      ]
+      isLoading: true,
+      recipes: [],
+      filteredRecipes: [],
+      filterCategory: 'All Recipes',
+      recipeTypes: RECIPE_TYPES
+    }
+  },
+
+  computed: {
+    noRecipes () {
+      return this.isLoading === false &&
+        (this.recipes && this.recipes.length === 0)
+    }
+  },
+
+  watch: {
+    'filterCategory': function () {
+      this.filteredRecipes = this.recipes.filter(this.filterRecipe)
+    }
+  },
+
+  mounted() {
+    this.getRecipes()
+  },
+
+  methods: {
+    async getRecipes () {
+      try {
+        const response = await this.$http.get('recipes')
+        this.recipes = response.data
+        this.filteredRecipes = this.recipes.slice()
+      } catch (error) {
+        showNoty(error)
+      }
+
+      this.isLoading = false
+    },
+
+    filterRecipe (recipe) {
+      return recipe.category.toString() === this.filterCategory.toString()
+    },
+
+    addRecipe () {
+      this.$router.push('recipe-add')
     }
   }
 }
@@ -131,6 +124,18 @@ export default {
       width: 60%;
     }
   }
+}
+
+.no-recipes {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
 }
 
 #recipes {

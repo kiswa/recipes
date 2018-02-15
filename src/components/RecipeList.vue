@@ -2,7 +2,7 @@
   <div>
     <div
       id="filter"
-      v-if="!noRecipes">
+      v-if="!isLoading && !noRecipes">
       Show:
       <select v-model="filterCategory">
         <option>All Recipes</option>

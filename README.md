@@ -1,6 +1,18 @@
 # recipes
 
-> A Vue.js SPA to keep track of recipes
+A Vue.js SPA to keep track of recipes
+
+Here's an example of the searchable, filterable, recipes list page (the default route):
+
+![List View](./.github/list-view.png)
+
+And this is what it looks like when you open a recipe:
+
+![Detail View](./.github/detail-view.png)
+
+And of course, it's responsive so it looks nice on any screen:
+
+![Mobile View](./.github/mobile-view.png)
 
 ## Build Setup
 
@@ -8,8 +20,8 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+# serve with hot reload at localhost:8080 and api at localhost:3000
+npm start
 
 # build for production with minification
 npm run build
@@ -26,5 +38,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

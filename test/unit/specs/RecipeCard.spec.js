@@ -7,9 +7,9 @@ describe('RecipeCard', () => {
   beforeEach(() => {
     const Constructor = Vue.extend(RecipeCard)
     const recipeMock = {
-      title: 'testing',
-      type: 'test',
-      imgSrc: 'test.jpg',
+      name: 'testing',
+      category: 'test',
+      image: 'test.jpg',
       description: 'testing',
       prepTime: 1,
       cookTime: 1
@@ -26,11 +26,11 @@ describe('RecipeCard', () => {
     vm = new Vue(RecipeCard).$mount()
 
     expect(vm.recipe).to.be.an('object')
-    expect(vm.recipe.title).to.equal('')
+    expect(vm.recipe.name).to.equal('')
   })
 
   it('should load a recipe in props', () => {
-    expect(vm.recipe.title).to.equal('testing')
+    expect(vm.recipe.name).to.equal('testing')
   })
 
   it('should compute an imageStyle property', () => {
@@ -38,7 +38,7 @@ describe('RecipeCard', () => {
   })
 
   it('should compute a recipeTime property', () => {
-    expect(vm.recipeTime).to.equal(2)
+    expect(vm.recipeTime).to.equal('2 mins')
   })
 
   it('should have a viewRecipe method to navigate to a recipe', () => {

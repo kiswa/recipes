@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+import router from '@/router'
 import TopNavigation from '@/components/TopNavigation'
 
 describe('TopNavigation', () => {
@@ -7,22 +9,14 @@ describe('TopNavigation', () => {
 
   beforeEach(() => {
     Vue.use(VueRouter)
+    const Constructor = Vue.extend(TopNavigation)
+    vm = new Constructor({ router }).$mount()
 
-    const router = new VueRouter({
-      routes: [
-        { path: '/', name: 'home', component: TopNavigation },
-        { path: '/list', name: 'recipe-list' },
-        { path: '/add', name: 'recipe-add' }
-      ]
+    Object.defineProperty(vm, '$route', {
+      get() {
+        return { path: '/' }
+      }
     })
-
-    router.push({ name: 'home' })
-
-    vm = new Vue({
-      el: document.createElement('div'),
-      router,
-      render: h => h('router-view')
-    }).$mount()
   })
 
   it('should be named "TopNavigation"', () => {
@@ -30,6 +24,6 @@ describe('TopNavigation', () => {
   })
 
   it('should compute the isHome property', () => {
-    expect(vm.$children[0].isHome).to.equal(true)
+    expect(vm.isHome).to.equal(true)
   })
 })

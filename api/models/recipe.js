@@ -22,13 +22,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: { isNumeric: true }
     },
-    description: DataTypes.TEXT,
+    description: {
+      type: DataTypes.TEXT
+    },
     instructions: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: { notEmpty: true }
     },
-    image: DataTypes.TEXT
+    image: {
+      type: DataTypes.TEXT
+    }
   })
 
   Recipe.associate = (models) => {

@@ -10,6 +10,7 @@ import TopNavigation from './components/TopNavigation'
 
 export default {
   name: 'App',
+
   components: {
     TopNavigation
   }
@@ -19,7 +20,6 @@ export default {
 <style lang="scss">
 @import '../node_modules/noty/lib/noty.css';
 @import '../node_modules/noty/lib/themes/mint.css';
-
 
 html {
   box-sizing: border-box;
@@ -58,4 +58,28 @@ html {
     max-width: 100%;
   }
 }
+
+.noty_type__alert {
+  border: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+
+  button {
+    background-color: #fff;
+    border: 1px solid #757575;
+    border-radius: 3px;
+    cursor: pointer;
+    line-height: 1rem;
+    margin-right: .5rem;
+    padding: 3px 7px;
+
+    &.danger {
+      background-color: #de636f;
+      border: 1px solid #CA5A65;
+      color: #fff;
+    }
+  }
+}
+
 </style>

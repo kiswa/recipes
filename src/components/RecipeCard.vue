@@ -3,31 +3,37 @@
     class="card"
     @click="viewRecipe(recipe.id)">
     <header>
-      {{ recipe.title }}
-      <span>{{ recipe.type }}</span>
+      {{ recipe.name }}
+      <span>{{ recipe.category }}</span>
     </header>
 
     <div
       class="image"
-      v-if="recipe.imgSrc"
-      :style="imageStyle"/>
+      v-if="recipe.image"
+      :style="imageStyle"
+    />
+
     <div
       class="spacer"
-      v-else>No Image</div>
+      v-else>
+      No Image
+    </div>
 
     <div class="description">{{ recipe.description }}</div>
 
     <div class="times">
       <div class="center">Total Recipe Time: {{ recipeTime }}</div>
       <div>
-        Prep Time: {{ recipe.prepTime }}
-        <span>Cook Time: {{ recipe.cookTime }}</span>
+        Prep Time: {{ prepTime }}
+        <span>Cook Time: {{ cookTime }}</span>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { convertTime } from '../utility'
+
 export default {
   name: 'RecipeCard',
 
@@ -36,9 +42,9 @@ export default {
       type: Object,
       default: () => {
         return {
-          title: '',
-          type: '',
-          imgSrc: '',
+          name: '',
+          category: '',
+          image: '',
           description: '',
           prepTime: 0,
           cookTime: 0
@@ -49,11 +55,19 @@ export default {
 
   computed: {
     imageStyle () {
-      return `background-image: url(${this.recipe.imgSrc});`
+      return `background-image: url(${this.recipe.image});`
     },
 
     recipeTime () {
-      return this.recipe.prepTime + this.recipe.cookTime
+      return convertTime(this.recipe.prepTime + this.recipe.cookTime)
+    },
+
+    prepTime () {
+      return convertTime(this.recipe.prepTime)
+    },
+
+    cookTime () {
+      return convertTime(this.recipe.cookTime)
     }
   },
 

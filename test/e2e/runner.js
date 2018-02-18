@@ -33,16 +33,27 @@ devConfigPromise.then(devConfig => {
     opts = opts.concat(['--env', 'chrome'])
   }
 
+
+  const del = require('del')
+  del('./api/recipes_test.sqlite')
+
   const spawn = require('cross-spawn')
-  const runner = spawn('./node_modules/.bin/nightwatch', opts, { stdio: 'inherit' })
+  const runner = spawn('./node_modules/.bin/nightwatch',
+                       opts,
+                       { stdio: 'inherit' })
+  const api = spawn('node',
+                    ['./api/'],
+                    { stdio: 'inherit', cwd: './' })
 
   runner.on('exit', function (code) {
     server.close()
+    api.kill()
     process.exit(code)
   })
 
   runner.on('error', function (err) {
     server.close()
+    api.kill()
     throw err
   })
 })

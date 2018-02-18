@@ -1,7 +1,11 @@
 <template>
   <nav>
-    <router-link :to="{ name: 'recipe-list' }">Recipe List</router-link>
-    <router-link :to="{ name: 'recipe-add' }">Add New Recipe</router-link>
+    <router-link
+      id="recipe-list"
+      :to="{ name: 'recipe-list' }">Recipe List</router-link>
+    <router-link
+      id="recipe-add"
+      :to="{ name: 'recipe-add' }">Add New Recipe</router-link>
 
     <div class="spacer"/>
     <input

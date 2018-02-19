@@ -46,6 +46,13 @@ export default {
     RecipeCard
   },
 
+  props: {
+    search: {
+      type: String,
+      default: ''
+    }
+  },
+
   data () {
     return {
       isLoading: true,
@@ -66,6 +73,10 @@ export default {
   watch: {
     'filterCategory': function () {
       this.filteredRecipes = this.recipes.filter(this.filterRecipe)
+    },
+
+    'search': function () {
+      this.filteredRecipes = this.recipes.filter(this.filterSearch)
     }
   },
 
@@ -88,6 +99,10 @@ export default {
 
     filterRecipe (recipe) {
       return recipe.category.toString() === this.filterCategory.toString()
+    },
+
+    filterSearch (recipe) {
+      return recipe.name.toLowerCase().includes(this.search)
     },
 
     addRecipe () {

@@ -26,4 +26,13 @@ describe('TopNavigation', () => {
   it('should compute the isHome property', () => {
     expect(vm.isHome).to.equal(true)
   })
+
+  it('should emit on search text changes', () => {
+    let called = false
+
+    vm.$emit = () => called = true
+    vm.emitSearch({ target: { value: '' } })
+
+    expect(called).to.equal(true)
+  })
 })

@@ -1,7 +1,9 @@
 <template>
   <div id="container">
-    <top-navigation/>
-    <router-view/>
+    <top-navigation
+      :search="searchText"
+      @search="updateSearch"/>
+    <router-view :search="searchText"/>
   </div>
 </template>
 
@@ -13,6 +15,18 @@ export default {
 
   components: {
     TopNavigation
+  },
+
+  data () {
+    return {
+      searchText: ''
+    }
+  },
+
+  methods: {
+    updateSearch (text) {
+      this.searchText = text
+    }
   }
 }
 </script>

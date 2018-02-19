@@ -34,6 +34,12 @@ describe('RecipeList', () => {
     expect(vm.recipes.length).to.equal(0)
   })
 
+  it('should watch the search property', () => {
+    vm.search = 'a'
+
+    expect(vm.recipes.length).to.equal(0)
+  })
+
   it('should have a getRecipes method', async () => {
     let httpUsed = false
 
@@ -73,6 +79,15 @@ describe('RecipeList', () => {
     result = vm.filterRecipe(recipe)
 
     expect(result).to.equal(true)
+  })
+
+  it('should have a filterSearch method', () => {
+    vm.search = 'a'
+
+    const recipe = { name: 'test' }
+    let result = vm.filterSearch(recipe)
+
+    expect(result).to.equal(false)
   })
 
   it('should have an addRecipe method', () => {

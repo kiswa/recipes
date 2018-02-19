@@ -11,6 +11,8 @@
     <input
       type="text"
       placeholder="Search Recipes..."
+      @input="emitSearch"
+      v-model="searchText"
       v-if="isHome">
   </nav>
 </template>
@@ -19,9 +21,28 @@
 export default {
   name: 'TopNavigation',
 
+  props: {
+    search: {
+      type: String,
+      default: ''
+    }
+  },
+
+  data () {
+    return {
+      searchText: this.search
+    }
+  },
+
   computed: {
     isHome () {
       return this.$route.path === '/'
+    }
+  },
+
+  methods: {
+    emitSearch (event) {
+      this.$emit('search', event.target.value)
     }
   }
 }

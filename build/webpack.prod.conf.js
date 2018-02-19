@@ -109,12 +109,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       minChunks: 3
     }),
 
-    // copy custom static assets
+    // Copy api folder
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
+        from: path.resolve(__dirname, '../api'),
+        to: 'api',
+        ignore: ['.*', 'node_modules/**/*', '*.sqlite']
       }
     ])
   ]

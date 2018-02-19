@@ -221,6 +221,7 @@ export default {
         }
       } catch(e) {
         showNoty('There was an error saving the recipe. Please try again.')
+        return
       }
 
       this.resetForm()

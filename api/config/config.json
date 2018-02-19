@@ -1,0 +1,17 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./recipes_dev.sqlite",
+    "operatorsAliases": false
+  },
+  "testing": {
+    "dialect": "sqlite",
+    "storage": "./api/recipes_test.sqlite",
+    "operatorsAliases": false
+  },
+  "production": {
+    "dialect": "sqlite",
+    "storage": "./recipes.sqlite",
+    "operatorsAliases": false
+  }
+}

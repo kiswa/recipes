@@ -1,0 +1,24 @@
+{
+  "name": "recipes-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/forever .",
+    "dev": "./node_modules/.bin/nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Ross <kiswa.com@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "forever": "^0.15.3",
+    "sequelize": "^4.33.4",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.15.0"
+  }
+}

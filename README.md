@@ -1,51 +1,56 @@
-# Recipes
-An Angular 2 Single Page Application (SPA) for tracking your recipes.
+# recipes
+
+A Vue.js SPA to keep track of recipes
 
 Here's an example of the searchable, filterable, recipes list page (the default route):
 
-![Recipe List](./docs/with-recipe.png)
+![List View](./.github/list-view.png)
 
 And this is what it looks like when you open a recipe:
 
-![Recipe Detail](./docs/detail.png)
+![Detail View](./.github/detail-view.png)
 
-And of course, it's mobile-first so it looks nice on any screen:
+And of course, it's responsive so it looks nice on any screen:
 
-![Mobile Example](./docs/mobile.png)
+![Mobile View](./.github/mobile-view.png)
 
-## Usage
-This project assumes you have [`npm`](https://www.npmjs.com/) and [`gulp`](http://gulpjs.com/) installed globally. It also uses `scss-lint` (`gem install scss-lint`).
+## Setup
 
- * Clone the repo: `git clone https://github.com/kiswa/recipes`
- * Install dependencies: `npm install`
- * Build the app: `gulp`
+```bash
+# Install dependencies for the Vue app and the API.
+npm i && cd api && npm i && cd ../
 
-You'll need to make sure the `dist/api` directory is writable. The `mod_rewrite` module must also be enabled in Apache.
+# Build for production
+npm run build
+```
 
-If not running at the root of your server, you will need to update the `base href` in `src/index.html` as it defaults to `/dist/`.
+Once those commands are run, there will be a `dist` directory with the app and API files. Copy these files to the web server location of your choice.
 
-## Tests
+### Run The Backend
 
-Tests are in the `test` directory.
+For everything to work, the backend must be running on Node. To start it (and have it kept up), navigate to the `api` directory and execute `npm start &`.
 
-To run the tests, use the command `gulp test`. This generates the JavaScript files, then runs the tests against them.
+## NPM Scripts
 
-You can also have the tests auto-run when changed by running the `gulp watchtests` command.
+``` bash
+# install dependencies
+npm install
 
-To see code coverage from the tests, use the `gulp coverage` command. This runs the tests, and generates `coverage.html` (it's a bit slower than just tests, hence the separate command).
+# serve with hot reload at localhost:8080 and API at localhost:3000
+npm start
 
-## Production
+# build for production with minification
+npm run build
 
-For a production setup, uncomment the lines in `boot.ts` to put Angular in production mode.
+# build for production and view the bundle analyzer report
+npm run build --report
 
-You may also want to run the minification task to minify vendor files: `gulp minify`
+# run unit tests
+npm run unit
 
-## API Development
+# run e2e tests
+npm run e2e
 
-If you add a model or controller to the API, you will need to run `gulp composer` to update the autoloader.
-
-## Auto-Refresh when Developing
-
-You may run `gulp watch` in a stand-alone terminal to have the output automatically updated when you save changes.
-
-If you install the [fb-flo plugin](https://chrome.google.com/webstore/detail/fb-flo/ahkfhobdidabddlalamkkiafpipdfchp) on Chromium (Chrome) you can have automatic browser refresh as well.
+# run all tests
+npm test
+```

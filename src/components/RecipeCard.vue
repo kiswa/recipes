@@ -8,14 +8,14 @@
     </header>
 
     <div
-      class="image"
       v-if="recipe.image"
       :style="imageStyle"
+      class="image"
     />
 
     <div
-      class="spacer"
-      v-else>
+      v-else
+      class="spacer">
       No Image
     </div>
 

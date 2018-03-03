@@ -1,7 +1,7 @@
 <template>
   <form
-    @submit.prevent="addRecipe"
-    v-if="recipe">
+    v-if="recipe"
+    @submit.prevent="addRecipe">
     <h2 v-if="!isEdit">
       Add Recipe <span class="required">= required field</span>
     </h2>
@@ -14,8 +14,8 @@
         Name:
         <input
           id="recipe-name"
-          type="text"
           v-model="recipe.name"
+          type="text"
           required>
       </label>
 
@@ -37,22 +37,22 @@
         Prep Time (minutes):
         <input
           id="recipe-prep"
+          v-model="recipe.prepTime"
           type="number"
           step="any"
           min="1"
-          required
-          v-model="recipe.prepTime">
+          required>
       </label>
 
       <label class="short-label">
         Cook Time (minutes):
         <input
           id="recipe-cook"
+          v-model="recipe.cookTime"
           type="text"
           step="any"
           min="1"
-          required
-          v-model="recipe.cookTime">
+          required>
       </label>
     </div>
 
@@ -68,32 +68,34 @@
     <div class="row ingredients">
       <strong>Ingredients:</strong>
       <div
-        class="ingredient"
         v-for="(ingredient, index) in recipe.ingredients"
-        :key="ingredient.id">
+        :key="ingredient.id"
+        class="ingredient">
         <label>
           Name:
           <input
+            v-model="ingredient.name"
             class="name"
             type="text"
-            required
-            v-model="ingredient.name">
+            required>
         </label>
+
         <label>
           Amount:
           <input
+            v-model="ingredient.amount"
             class="amount"
             type="text"
-            required
-            v-model="ingredient.amount">
+            required>
         </label>
+
         <label>
           Measure:
           <input
+            v-model="ingredient.measure"
             class="measure"
             type="text"
-            required
-            v-model="ingredient.measure">
+            required>
         </label>
         <a @click.prevent="removeIngredient(index)">-</a>
       </div>
@@ -114,9 +116,9 @@
       <label>
         Image:
         <input
+          ref="filer"
           type="file"
           accept="image/*"
-          ref="filer"
           @change="onFileChange">
       </label>
 

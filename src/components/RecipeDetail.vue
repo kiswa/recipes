@@ -18,9 +18,9 @@
           <h4>Ingredients</h4>
 
           <div
-            class="ingredient"
             v-for="item in recipe.ingredients"
-            :key="item.id">
+            :key="item.id"
+            class="ingredient">
             {{ item.name }}
             <div>
               {{ item.amount }} <span>{{ item.measure }}</span>
@@ -29,9 +29,9 @@
         </div>
 
         <div
-          class="image"
           v-if="recipe.image"
           :style="imageStyle"
+          class="image"
         />
       </div>
 

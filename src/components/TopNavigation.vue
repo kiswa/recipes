@@ -9,11 +9,11 @@
 
     <div class="spacer"/>
     <input
+      v-if="isHome"
+      v-model="searchText"
       type="text"
       placeholder="Search Recipes..."
-      @input="emitSearch"
-      v-model="searchText"
-      v-if="isHome">
+      @input="emitSearch">
   </nav>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
-      id="filter"
-      v-if="!isLoading && !noRecipes">
+      v-if="!isLoading && !noRecipes"
+      id="filter">
       Show:
       <select v-model="filterCategory">
         <option>All Recipes</option>
@@ -13,14 +13,14 @@
     </div>
 
     <div
-      class="loading"
-      v-if="isLoading">
+      v-if="isLoading"
+      class="loading">
       Loading Recipes...
     </div>
 
     <div
-      class="no-recipes"
       v-if="noRecipes"
+      class="no-recipes"
       @click="addRecipe()">
       <h3>No recipes found.</h3>
       Click this card to add one.

@@ -2,7 +2,7 @@
 
 A Vue.js SPA to keep track of recipes
 
-[![Build Status](https://travis-ci.org/kiswa/recipes.svg)](https://travis-ci.org/kiswa/recipes)
+[![Build Status](https://travis-ci.org/kiswa/recipes.svg)](https://travis-ci.org/kiswa/recipes) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5371a06385b64008a55c1e7e128e27d1)](https://www.codacy.com/app/kiswa-com/recipes?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kiswa/recipes&amp;utm_campaign=Badge_Grade)
 
 Here's an example of the searchable, filterable, recipes list page (the default route):
 

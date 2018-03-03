@@ -2,6 +2,8 @@
 
 A Vue.js SPA to keep track of recipes
 
+[![Build Status](https://travis-ci.org/kiswa/recipes.svg)](https://travis-ci.org/kiswa/recipes)
+
 Here's an example of the searchable, filterable, recipes list page (the default route):
 
 ![List View](./.github/list-view.png)

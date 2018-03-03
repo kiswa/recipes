@@ -4,4 +4,5 @@ node_js:
   - "lts/*"
 before_script:
   - npm i -g vue-cli
-  - cd api && npm i && cd ..
+script:
+  - npm run unit
